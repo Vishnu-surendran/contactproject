@@ -1,0 +1,1 @@
+In order to use first extractor zip file or just clone it.Enter into both front-end and back end folders and  type the command npm i .After that just start both front-end and back end using the command npm start
