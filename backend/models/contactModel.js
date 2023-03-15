@@ -46,24 +46,21 @@ if(name && phone && email && address && userId){
 
 
 contactSchema.statics.editContact=async function(name,phone,email,address,contactid){
-    const nameExist=await this.findOne({name:{$regex:new RegExp(name),$options:"i"}})
-    if(nameExist){
-        throw new Error("Name already taken")
-    }else{
+  
         const response=await this.updateOne({_id:contactid},{name:name,email:email,phone:phone,address:address},{new:true})
         if(response){
         return response
         }else{
             throw new Error("Unable to update contact")
         }
-    }
+    
  
 }
 
 
 contactSchema.statics.deleteContact=async function(contactid){
-
     const response=await this.deleteOne({_id:contactid})
+  
     if(!response){
         throw new Error("Unable to delete")
     }else{

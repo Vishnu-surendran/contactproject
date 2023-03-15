@@ -9,6 +9,7 @@ const contactCollection=require("../models/contactModel")
 /* Creating a token */
 
 
+
 const createToken=async(id)=>{
     return jwt.sign({id},process.env.PRIVATEKEY,{expiresIn:"2d"})
 }
@@ -40,7 +41,7 @@ const response=await userCollection.login(email,password)
 
 const token=await createToken(response._id)
 
-res.status(200).json(token)
+res.status(200).json({token:token})
     }catch(error){
         res.status(400).json(error.message)
     }
@@ -54,7 +55,7 @@ const createContact=async(req,res)=>{
 if(req.body){
     try{
 const response=await contactCollection.newContact(name,phone,email,address,userId)
-console.log(response,"jk");
+
 res.status(200).json(response)
     }catch(error){
         res.status(400).json(error.message)
@@ -70,9 +71,11 @@ res.status(200).json(response)
 
 const editContact=async(req,res)=>{
     const{name,phone,email,address,contactid}=req.body
+  
     if(req.body){
         try{
     const response=await contactCollection.editContact(name,phone,email,address,contactid)
+ 
     res.status(200).json(response)
         }catch(error){
             res.status(400).json(error.message)
@@ -98,12 +101,15 @@ res.status(400).json({message:'Unable to get contacts'})
 
 }
 
+
 /* Delete a contact */
 
 const removeContact=async(req,res)=>{
-const{contactid}=req.body
+  
+const{id}=req.params
 try{
-    const response=await contactCollection.deleteContact(contactid)
+    const response=await contactCollection.deleteContact(id)
+  
     res.status(200).json({message:"Contact deleted Successfully"})
 }catch(error){
     res.status(400).json({message:error.message})

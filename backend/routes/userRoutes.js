@@ -21,7 +21,7 @@ router.get("/contacts",allContacts)
 
 router.patch("/contacts/edit",editContact)
 
-router.delete("/contacts/delete",removeContact)
+router.delete("/contacts/delete/:id",removeContact)
 
 
 module.exports=router
